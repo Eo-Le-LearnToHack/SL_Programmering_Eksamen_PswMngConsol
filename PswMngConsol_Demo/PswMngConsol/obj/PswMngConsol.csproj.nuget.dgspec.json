@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\sim8hu\\Desktop\\Code\\Eksamen_PswMngConsol\\PswMngConsol_Demo\\PswMngConsol\\PswMngConsol.csproj": {}
+    "C:\\Users\\sim8hu\\Desktop\\Code\\cSharp\\Eksamen_console\\PswMngConsol_Demo\\PswMngConsol\\PswMngConsol.csproj": {}
   },
   "projects": {
-    "C:\\Users\\sim8hu\\Desktop\\Code\\Eksamen_PswMngConsol\\PswMngConsol_Demo\\PswMngConsol\\PswMngConsol.csproj": {
+    "C:\\Users\\sim8hu\\Desktop\\Code\\cSharp\\Eksamen_console\\PswMngConsol_Demo\\PswMngConsol\\PswMngConsol.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\sim8hu\\Desktop\\Code\\Eksamen_PswMngConsol\\PswMngConsol_Demo\\PswMngConsol\\PswMngConsol.csproj",
+        "projectUniqueName": "C:\\Users\\sim8hu\\Desktop\\Code\\cSharp\\Eksamen_console\\PswMngConsol_Demo\\PswMngConsol\\PswMngConsol.csproj",
         "projectName": "PswMngConsol",
-        "projectPath": "C:\\Users\\sim8hu\\Desktop\\Code\\Eksamen_PswMngConsol\\PswMngConsol_Demo\\PswMngConsol\\PswMngConsol.csproj",
+        "projectPath": "C:\\Users\\sim8hu\\Desktop\\Code\\cSharp\\Eksamen_console\\PswMngConsol_Demo\\PswMngConsol\\PswMngConsol.csproj",
         "packagesPath": "C:\\Users\\sim8hu\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\sim8hu\\Desktop\\Code\\Eksamen_PswMngConsol\\PswMngConsol_Demo\\PswMngConsol\\obj\\",
+        "outputPath": "C:\\Users\\sim8hu\\Desktop\\Code\\cSharp\\Eksamen_console\\PswMngConsol_Demo\\PswMngConsol\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\sim8hu\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -54,7 +54,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.302\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.301\\RuntimeIdentifierGraph.json"
         }
       }
     }

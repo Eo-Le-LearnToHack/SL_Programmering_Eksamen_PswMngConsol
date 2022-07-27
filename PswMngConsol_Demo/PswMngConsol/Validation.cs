@@ -8,94 +8,56 @@ namespace PswMngConsol
 {
     internal class Validation
     {
-        public static string StringMinLength(int x)
-        {
-            string? value = null;
-            string error = Message.userinputMinLength(x);
-            do
-            {
-                string? answer = Console.ReadLine();
-                Console.WriteLine(answer.GetType() );
-                if (answer.Length < x && StringEmpty(answer))
-                {
-                    Console.WriteLine(error);
-                }
-                else value = answer;
-            } while (value == null);
-            return value;
-        }
+        public static bool StrMinLen(string input, int minLen)
+        { if (input.Length >= minLen) { return true; } else { return false; } }
 
-        public static string StringMinUppercase(int x)
-        {
-            string? value = null;
-            string error = "Skal indeholde mindst 1 stort bogstav";
-            char[] answerChar;
-            do
-            {
-                string? answer = Console.ReadLine();
-                if (StringUppercase(answer)) //Return true if the answer contains Uppercase
-                    value = answer;
-                else
-                    Console.WriteLine(error);
-            } while (value == null);
-            return value;
-        }
+        public static bool StrContainsUppercase(string input)
+        { if (input.Any(Char.IsUpper)) { return true; } else { return false; } }
 
-        public static bool StringUppercase(string a)
-        {
-            bool bol = false;
-            for (int i = 0; i < a.Length; i++)
-            {
-                if (Char.IsUpper(a, i))
-                {
-                    bol = true;
-                    break;
-                }
-            }
-            return bol;
-        }
+        public static bool StrContainsLowercase(string input)
+        { if (input.Any(Char.IsLower)) { return true; } else { return false; } }
 
-        public static bool StringEmpty(string a)
-        {
-            bool bol = false;
-            if (IsEmpty(a) || a == "" || a == a.Trim())
-            {
-                bol = true;
-            }
-            return bol;
-        }
+        public static bool StringContainsNumber(string input)
+        { if (input.Any(Char.IsNumber)) { return true; } else { return false; } }
 
+        public static bool StrNoSeparator(string input)
+        { if (input.Any(Char.IsSeparator)) { return false; } else { return true; } }
 
-        public static string StringMinLowercase(int x)
-        {
-            string? value = null;
-            string error = "Skal indeholde mindst 1 lille bogstav";
-            char[] answerChar;
-            do
-            {
-                string? answer = Console.ReadLine();
-                if (StringLowercase(answer)) //Return true if the answer contains Lowercase
-                    value = answer;
-                else
-                    Console.WriteLine(error);
-            } while (value == null);
-            return value;
-        }
-
-        public static bool StringLowercase(string a)
-        {
-            bool bol = false;
-            for (int i = 0; i < a.Length; i++)
-            {
-                if (Char.IsLower(a, i))
-                {
-                    bol = true;
-                    break;
-                }
-            }
-            return bol;
-        }
+        public static bool StrContainsSpecialChar(string input)
+        { if (input.Any(Char.IsSymbol) || input.Any(Char.IsPunctuation)) { return true; } else { return false; } }
 
 
     }
 }
+
+
+/* TEST
+ * 
+ * 
+ *  public static bool StrNotEmpty(string input)
+        { if (String.IsNullOrEmpty(input) || String.IsNullOrWhiteSpace(input)) { return false; } else { return true; } }
+
+ * public static Predicate<string> dPredicateStr;
+        public static Func<string, int, bool> dFuncStrIntBool;
+        public static Func<bool, bool> dFunc2xBool;
+        public static int counter = 0;
+
+        public static void DelToInvoke (Predicate<string> dMethod, string userInput, int dMethodIndex)
+            {
+            if (dMethod != null)
+            {
+                int listLength = dMethod.GetInvocationList().Length;
+                var tempDel = dMethod.GetInvocationList()[dMethodIndex]; //Creating a reference to the Predicate method reference at index counter.
+                object bol = tempDel.DynamicInvoke(userInput); //Running the method at index once and creating an object from the it. The object is either true or false.
+                if ((bool)bol) 
+                {
+                    Console.WriteLine("true true");
+                }
+
+                tempDel = null;
+                Validation.counter++;
+            }
+        }
+
+ * 
+ * */
