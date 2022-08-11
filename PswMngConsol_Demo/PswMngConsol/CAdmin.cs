@@ -1,6 +1,6 @@
 ﻿namespace PswMngConsol
 {
-    internal abstract class CAdmin : CAccount
+    internal abstract class CAdmin : CAccount //Abstract means the class can't be instantiated
     {
         public static List<string> pswHash = new();
         public static List<string> salt = new();
@@ -41,7 +41,6 @@
                 Console.Clear();
                 Console.WriteLine(IMessage.pswNoMatch);
             }
-            Console.ReadLine();
         }
 
         public static void CreateOrChangePsw()

@@ -2,9 +2,15 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
+	  <TargetFramework>net6.0-windows</TargetFramework> <!-- Add-windows -->
+	  <UseWPF>true</UseWPF> <!-- Add -->
+	  <UseWindowsForms>true</UseWindowsForms> <!-- Add -->
     <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+    <Nullable></Nullable> <!-- Enable has been removed. --> 
   </PropertyGroup>
 
 </Project>
+
+
+<!-- Unload, reload project: https://stackoverflow.com/questions/38460253/how-to-use-system-windows-forms-in-net-core-class-library
+ -->  
