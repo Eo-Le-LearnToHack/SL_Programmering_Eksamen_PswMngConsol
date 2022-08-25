@@ -13,22 +13,21 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\sim8hu\\Desktop\\Code\\cSharp\\Eksamen_console\\PswMngConsol_Demo\\PswMngConsol\\PswMngConsol.csproj",
+      "projectUniqueName": "C:\\Dev\\Eksamen_console\\PswMngConsol_Demo\\PswMngConsol\\PswMngConsol.csproj",
       "projectName": "PswMngConsol",
-      "projectPath": "C:\\Users\\sim8hu\\Desktop\\Code\\cSharp\\Eksamen_console\\PswMngConsol_Demo\\PswMngConsol\\PswMngConsol.csproj",
+      "projectPath": "C:\\Dev\\Eksamen_console\\PswMngConsol_Demo\\PswMngConsol\\PswMngConsol.csproj",
       "packagesPath": "C:\\Users\\sim8hu\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\sim8hu\\Desktop\\Code\\cSharp\\Eksamen_console\\PswMngConsol_Demo\\PswMngConsol\\obj\\",
+      "outputPath": "C:\\Dev\\Eksamen_console\\PswMngConsol_Demo\\PswMngConsol\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\sim8hu\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
-        "net6.0-windows7.0"
+        "net6.0-windows"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "https://api.nuget.org/v3/index.json": {}
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {}
       },
       "frameworks": {
         "net6.0-windows7.0": {
@@ -51,7 +50,8 @@
           "net47",
           "net471",
           "net472",
-          "net48"
+          "net48",
+          "net481"
         ],
         "assetTargetFallback": true,
         "warn": true,
@@ -63,7 +63,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.301\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
       }
     }
   }
