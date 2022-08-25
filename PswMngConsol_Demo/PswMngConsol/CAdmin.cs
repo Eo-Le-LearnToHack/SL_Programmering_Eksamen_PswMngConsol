@@ -1,13 +1,57 @@
-﻿namespace PswMngConsol
+﻿using System.Globalization;
+
+namespace PswMngConsol
 {
     internal abstract class CAdmin : CAccount //Abstract means the class can't be instantiated
     {
-        public static List<string> pswHash = new();
-        public static List<string> salt = new();
+        public static List<string> pswHash = new(); //SKAL laves om til almindelig string på et senere tidspunkt.
+        public static List<string> salt = new();    //SKAL laves om til almindelig string på et senere tidspunkt.
+        public static List<string> pswTip = new();  //SKAL laves om til almindelig string på et senere tidspunkt.
+
+
+        public static void IfAdminFileExistsReadValuesFromFileToCAdmin()
+        {
+            try
+            {
+                if (IFile.FileExists(IFile.fileAdminTxt[0]))
+                {
+                    IFile.listStringArray.Clear();
+                    IFile.ReadAllToListStringArrayFromTxtFile(IFile.fullPathAdmin[0]);
+                    if (IFile.listStringArray.Count == 1 && IFile.listStringArray[0].Length == 4)
+                    {
+                        CAdmin.pswHash.Clear(); //SKAL ÆNDRE DISSE til alm. string, så behøves clear ikke anvendes.
+                        CAdmin.salt.Clear();
+                        CAdmin.pswTip.Clear();
+                        CAdmin.pswDateTime.Clear();
+
+                        CAdmin.pswHash.Add(IFile.listStringArray[0][0]);
+                        CAdmin.salt.Add(IFile.listStringArray[0][1]);
+                        CAdmin.pswTip.Add(IFile.listStringArray[0][2]);
+                        CAdmin.pswDateTime.Add(DateTime.Parse((IFile.listStringArray[0][3]), CultureInfo.DefaultThreadCurrentCulture));
+                    }
+                    else
+                    {
+                        Console.WriteLine("Filens indehold i Admin0.txt er forkert. Programmet lukker ned");
+                        System.Environment.Exit(1); //Exitcode = 0, means the program ends succesfully.
+                    }
+                }
+                
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Console.WriteLine("Filens indehold i Admin0.txt er forkert. Programmet lukker ned");
+                System.Environment.Exit(1); //Exitcode = 0, means the program ends succesfully.
+            }
+            
+        }
 
         public static void CreatePswIfCriteriaFulfilled(string input, string inputRepeat)
         {
-            if (input == inputRepeat) { AddSaltAndPsw(IHash.byteArrLen); }
+            if (input == inputRepeat) 
+            { 
+                AddSaltAndPsw(IHash.byteArrLen); 
+            }
             else { Console.WriteLine(IMessage.pswNoMatch); }
         }
 
@@ -20,6 +64,10 @@
             string pswHash = IHash.GenerateHash(IUserInput.first, salt);
             CAdmin.pswHash.Clear();
             CAdmin.pswHash.Add(pswHash);
+
+            //LogSaltAndPsw
+            IFile.ReadAndAddStrToFileTxt(IFile.path + IFile.fileAdminTxt[0], pswHash + ",");
+            IFile.ReadAndAddStrToFileTxt(IFile.path + IFile.fileAdminTxt[0], salt + ",");
         }
 
         public static void CreateOrChangeDateTimeAndTip(List<string> pswHash, List<string> pswTip)
@@ -27,14 +75,24 @@
             if (IUserInput.first == IUserInput.repeat || IPswComplexity.listOfNonComplianceIndex.Count == 0 && pswTip.Count > 0)
             {
                 Console.Clear();
-
                 Console.Write(IMessage.createPswTip);
-                pswTip.Clear();
-                pswTip.Add(Console.ReadLine());
-
-                DateTime localDateTime = DateTime.Now;
-                pswDateTime.Clear();
-                pswDateTime.Add(localDateTime);
+                string pswTipNew = Console.ReadLine();
+                int elementsInTxtFile = IFile.ReturnElementsInSingleLineFileTxt(IFile.fullPathAdmin[0]); //bør være 4 elementer (pswHash,salt,pswTip,creationTime)
+                if (pswTip.Count > 0 && elementsInTxtFile == 4) //svarer til adminkoden er blevet oprettet
+                {
+                    IFile.OverWritePswTipInTxtFile(IFile.fullPathAdmin[0], pswTipNew); //LogTip
+                }
+                else
+                {
+                    pswTip.Clear();
+                    pswTip.Add(pswTipNew);
+                    DateTime DateTime = DateTime.Now;
+                    pswDateTime.Clear();
+                    pswDateTime.Add(DateTime);
+                    //LogTipAndDateTime
+                    IFile.ReadAndAddStrToFileTxt(IFile.path + IFile.fileAdminTxt[0], pswTipNew + ",");
+                    IFile.ReadAndAddStrToFileTxt(IFile.path + IFile.fileAdminTxt[0], DateTime.ToString("dd-MM-yyyy HH:mm:ss"));
+                } 
             }
             else
             {
@@ -49,7 +107,11 @@
             {
                 IReset.ListAndUserInputValues();
                 if (pswHash.Count == 0) { Console.Write(IMessage.createNewAdminCode); }
-                else if (pswHash.Count > 0) { Console.Write(IMessage.changeAdminCode); }
+                else if (pswHash.Count > 0) 
+                { 
+                    Console.Write(IMessage.changeAdminCode);
+                    IFile.ClearAllStrInFileTxt(IFile.fullPathAdmin[0]);
+                }
                 IUserInput.first = IUserInput.Mask();
                 IPswComplexity.CheckIfComplexityFulfilled(IUserInput.first);
             } while (IPswComplexity.listOfNonComplianceIndex.Count > 0);

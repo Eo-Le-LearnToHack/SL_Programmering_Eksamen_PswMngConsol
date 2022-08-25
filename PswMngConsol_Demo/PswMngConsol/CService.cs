@@ -10,16 +10,11 @@
             counterServiceAccLength = 1,
             counterGlobalUsrID = 0; //OBS! på et tidspunkt vil programmet crashes hvis global ID ikke bliver nulstillet!!
 
-
         public static CService[] serviceAcc = new CService[counterServiceAccLength];
         public List<string> psw = new();
         public List<string> usr = new();
         public List<int> globalUsrID = new();
         public List<int> localUsrID = new();
-
-
-
-
 
         public static void MasterMethod(
             Action<string> AddOrDisplayServiceName,
@@ -332,35 +327,46 @@
                 TemplateReturnUrsIndex, IMessage.autofill_EnterUsrNum,
 
                 TemplateAutofill,
-                TemplateBoolOption1, IMessage.anyMorePswToBeChanged);
+                TemplateBoolOption1, IMessage.anyMoreAutofill);
         }
 
         private static void TemplateAutofill(string serviceIndex, string usrIndex)
         {
+            bool bol;
             ConsoleKeyInfo cki = new();
-            Console.WriteLine("Tryk på\nF9 for at starte autoudfyld af brugernavn.\nF10 for at starte autoudfyld af kode.\nEnter for at afslutte autoudfyld.");
+            Console.WriteLine("Tryk på\nF8  :BRUGERNAVN autoudfyld\n" +
+                "F9  :KODE autoudfyld\n" +
+                "F10 :BRUGERNAVN+KODE autoudfyld\n" +
+                "Enter for at afslutte autoudfyld");
             do
             {
+                bol = true;
                 cki = Console.ReadKey();
-                if (cki.Key == ConsoleKey.F9)
+                if (cki.Key == ConsoleKey.F8)
                 {
-                    MessageBox.Show("Placer musemarkøren i det felt som brugernavn skal udfyldes i.\nKlik OK og autoudfyld går i gang.");
-                    Thread.Sleep(500);
+                    MessageBox.Show("Placer musemarkøren i det felt som BRUGERNAVN skal udfyldes i.\nKlik OK og autoudfyld går i gang.");
                     ISendkeys.MyCopyPaste($"{serviceAcc[Convert.ToInt32(serviceIndex)].usr[Convert.ToInt32(usrIndex)]}");
+                }
+                else if (cki.Key == ConsoleKey.F9)
+                {
+                    MessageBox.Show("Placer musemarkøren i det felt som KODEN skal udfyldes i.\nKlik OK og autoudfyld går i gang.");
+                    string pswDecrypt = IHash.Decrypt(serviceAcc[Convert.ToInt32(serviceIndex)].psw[Convert.ToInt32(usrIndex)]);
+                    ISendkeys.MyCopyPaste($"{pswDecrypt}");
                 }
                 else if (cki.Key == ConsoleKey.F10)
                 {
-                    MessageBox.Show("Placer musemarkøren i det felt som brugernavn skal udfyldes i.\nKlik OK og autoudfyld går i gang.");
-                    Thread.Sleep(500);
-                    ISendkeys.MySendKeys($"{serviceAcc[Convert.ToInt32(serviceIndex)].psw[Convert.ToInt32(usrIndex)]}");
+                    MessageBox.Show("Placer musemarkøren i det felt som BRUGERNAVN skal udfyldes i.\nKlik OK og autoudfyld går i gang.");
+                    string usr = serviceAcc[Convert.ToInt32(serviceIndex)].usr[Convert.ToInt32(usrIndex)];
+                    string pswDecrypt = IHash.Decrypt(serviceAcc[Convert.ToInt32(serviceIndex)].psw[Convert.ToInt32(usrIndex)]);
+                    ISendkeys.MyCopyPaste($"{usr}");
+                    ISendkeys.MySendKeyTab();
+                    ISendkeys.MyCopyPaste($"{pswDecrypt}");
                 }
                 else if (cki.Key == ConsoleKey.Enter)
                 {
-                    int a = 2;
-                    Console.WriteLine("Enter trykket");
-                    a.Equals(1);
+                    bol = false;
                 }
-            } while (true);
+            } while (bol);
                 
             
         }
@@ -466,6 +472,9 @@
             if (counterServiceAccIndex > 0) { Array.Resize(ref serviceAcc, counterServiceAccLength); } //Forøg arrayetslængde med +1 //ref gør at ændringen tilføjes til originale kilde/array
             serviceAcc[counterServiceAccIndex] = new CService();
             name.Add(serviceName);
+            IFile.CreateFileTxt(IFile.fileServiceTxt[counterServiceAccIndex]);
+            
+            IFile.ReadAndAddStrToFileTxt(IFile.fullPathService[counterServiceAccIndex], serviceName + ",");
             TemplateDisplayingServiceNames(serviceName);
         }
         
@@ -554,11 +563,18 @@
                     bol = false;
                     Console.Clear();
                     Console.Write($"Service {name[Convert.ToInt32(serviceIndex)].ToUpper()}\n{IMessage.addUrsname}");
-                    serviceAcc[Convert.ToInt32(serviceIndex)].usr.Add(Console.ReadLine());
+                    string usr = Console.ReadLine();
+                    serviceAcc[Convert.ToInt32(serviceIndex)].usr.Add(usr);
                     Console.Write($"{IMessage.addPsw}");
-                    serviceAcc[Convert.ToInt32(serviceIndex)].psw.Add(Console.ReadLine());
+                    string psw = Console.ReadLine();
+                    string pswEncrypt = IHash.Encrypt(psw);
+                    serviceAcc[Convert.ToInt32(serviceIndex)].psw.Add(pswEncrypt);
                     serviceAcc[Convert.ToInt32(serviceIndex)].globalUsrID.Add(counterGlobalUsrID);
                     serviceAcc[Convert.ToInt32(serviceIndex)].localUsrID.Add(counterGlobalUsrID);
+                    IFile.ReadAndAddStrToFileTxt(IFile.fullPathService[Convert.ToInt32(serviceIndex)], usr + ",");
+                    IFile.ReadAndAddStrToFileTxt(IFile.fullPathService[Convert.ToInt32(serviceIndex)], pswEncrypt + ",");
+                    IFile.ReadAndAddStrToFileTxt(IFile.fullPathService[Convert.ToInt32(serviceIndex)], counterGlobalUsrID + ",");
+                    IFile.ReadAndAddStrToFileTxt(IFile.fullPathService[Convert.ToInt32(serviceIndex)], counterGlobalUsrID + $"\n{CService.name[Convert.ToInt32(serviceIndex)]},");
                     counterGlobalUsrID++;
                     bol = TemplateBoolOption1(IMessage.anyMoreUsrnameToBeAdded);
                 } while (bol);

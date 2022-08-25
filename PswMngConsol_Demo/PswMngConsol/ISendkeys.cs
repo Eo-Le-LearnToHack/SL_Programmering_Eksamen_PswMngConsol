@@ -9,6 +9,11 @@ namespace PswMngConsol
     internal class ISendkeys
     {
 
+        public static void MySendKeyTab()
+        {
+                SendKeys.SendWait("{tab}");
+        }
+
         public static void MySendKeys(string text)
         {
             for (int i = 0; i < text.Length; i++)

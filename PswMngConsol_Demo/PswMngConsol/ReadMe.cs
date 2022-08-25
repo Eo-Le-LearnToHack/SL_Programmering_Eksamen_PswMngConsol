@@ -25,6 +25,7 @@
  * Interface, Fields not allowed:   https://stackoverflow.com/questions/54242436/why-is-the-interface-showing-interfaces-cannot-contain-fields
  * 
  * Hash, compute and compare:       https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.hashalgorithm.computehash?view=net-6.0
+ * Hash, simple encrypt/decrypt     https://stackoverflow.com/questions/9031537/really-simple-encryption-with-c-sharp-and-symmetricalgorithm
  * 
  * Memory, value vs reference:      Bogen om C#
  * Mouseclick:                      https://www.medo64.com/2013/05/console-mouse-input-in-c/

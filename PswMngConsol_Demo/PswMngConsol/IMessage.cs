@@ -6,6 +6,7 @@
 
             anyMoreServiceNameToBeChanged = "Er der flere servicenavn du gerne vil?",
             anyMorePswToBeChanged = "Er der flere kode du gerne vil ændre?",
+            anyMoreAutofill = "Er der andet du ønsker at autoudfylde?",
             anyMoreUsrnameToBeChanged = "Er der flere brugernavn du gerne vil ændre?",
             anyMoreUsrToBeDeleted = "Er der flere brugere du gerne vil slette?",
             anyMoreServiceToBeDeleted = "Er der flere service du gerne vil slette?",
